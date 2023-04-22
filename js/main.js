@@ -1,2 +1,2 @@
-import {publication} from './data.js';
 
+import {publication} from './data.js';
