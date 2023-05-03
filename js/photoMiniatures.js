@@ -1,21 +1,38 @@
-import {showPhotoFull} from './photoFull.js'
+import {openPhotoFull} from './photoFull.js';
 
-const pictureTemplate = document.querySelector('#picture');
-const pictureContainer = document.querySelector('.pictures');
+const photoTemplate = document.querySelector('#picture').content.querySelector('.picture');
+const photoConteiner = document.querySelector('.pictures');
+const photoListFragment = document.createDocumentFragment();
 
-export function showPhotoMini(descriptions) {
-  const pictureFragment = document.createDocumentFragment();
-  for (const desc of descriptions) {
-    const picture = pictureTemplate.cloneNode(true).content;
-    picture.querySelector('.picture__img').src = desc.url;
-    picture.querySelector('.picture__img').addEventListener('click', (ev) => {
-      ev.preventDefault();
-      showPhotoFull(desc);
-    });
+let pictures = [];
 
-    picture.querySelector('.picture__likes').textContent = desc.likes;
-    picture.querySelector('.picture__comments').textContent = desc.comments.length;
-    pictureFragment.appendChild(picture);
+const showPhoto = (photos) => {
+  pictures = photos;
+  photos.forEach(({url, comments, likes}, index) => {
+    const photoElement = photoTemplate.cloneNode(true);
+    photoElement.querySelector('.picture__img').setAttribute('photo-index', index);
+    photoElement.querySelector('.picture__img').src = url;
+    photoElement.querySelector('.picture__likes').textContent = likes;
+    photoElement.querySelector('.picture__comments').textContent = comments.length;
+    photoListFragment.appendChild(photoElement);
+  });
+
+  photoConteiner.appendChild(photoListFragment);
+};
+
+const hidePictures = () => {
+  photoConteiner.querySelectorAll('.picture').forEach((photoElement) => {
+    photoElement.remove();
+  });
+};
+
+const onPhotoListClick = function (evt) {
+  if (evt.target.nodeName === 'IMG') {
+    evt.preventDefault();
+    openPhotoFull(pictures[evt.target.getAttribute('photo-index')]);
   }
-  pictureContainer.appendChild(pictureFragment);
-} 
+};
+
+photoConteiner.addEventListener('click', onPhotoListClick);
+
+export {showPhoto, hidePictures};
