@@ -1,4 +1,4 @@
-import {photoMini} from './photoMiniatures.js';
+import {showPhoto} from './photoMiniatures.js';
 import './new photo.js';
 import './validation-form.js';
 import {getData} from './api.js';

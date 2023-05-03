@@ -1,6 +1,5 @@
 const checkMaxSymbol = (str, maxLength) => str.length <= maxLength;
 
-
 function getRandomNumber(min, max) {
   if (min < max && min >= 0 && max >= 0) {
     min = Math.ceil(min);
@@ -17,7 +16,6 @@ function getRandomNumber(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
-const isEscapeKey = (evt) => evt.key === 'Escape';
+const isEscapeKey = (evt) => (evt.key === 'Escape');
 
 export {checkMaxSymbol, getRandomNumber, isEscapeKey};
-
