@@ -1,19 +1,19 @@
-const commentList = document.querySelector('.social__comments');
+import {BASIC_RENDER_COMMENTS} from './constant.js';
+
+const allComments = document.querySelector('.social__comments');
 const commentTemplate = document.querySelector('#social__comment')
   .content
   .querySelector('.social__comment');
 
 const commentsCountElement = document.querySelector('.current-comments-count');
-const commentsAmountElement = document.querySelector('.comments-count');
-const loadCommentsBtn = document.querySelector('.comments-loader');
-
-const SHOW_COMMENTS_STEP = 5;
+const commentsSumElement = document.querySelector('.comments-count');
+const btnCommentsLoad = document.querySelector('.comments-loader');
 
 let shownCommentsCount = 0;
-let photoComments = [];
+let pictureComments = [];
 
-const hideLoadCommentsBtn = () => {
-  loadCommentsBtn.classList.add('visually-hidden');
+const hideBtnCommentsLoad  = () => {
+  btnCommentsLoad.classList.add('visually-hidden');
 };
 
 const addComments = (comments) => {
@@ -24,51 +24,51 @@ const addComments = (comments) => {
     commentElement.querySelector('.social__text').textContent = comment.message;
     commentsListFragment.appendChild(commentElement);
   });
-  commentList.appendChild(commentsListFragment);
+  allComments.appendChild(commentsListFragment);
 };
 
-const showCommentList = (comments) => {
-  photoComments = comments;
+const showAllComments = (comments) => {
+  pictureComments = comments;
 
-  const commentsAmount = photoComments.length;
-  commentsAmountElement.textContent = commentsAmount.toString();
+  const commentsSum = pictureComments.length;
+  commentsSumElement.textContent = commentsSum.toString();
 
-  if (commentsAmount < SHOW_COMMENTS_STEP) {
-    addComments(photoComments.slice(shownCommentsCount, shownCommentsCount + commentsAmount));
-    commentsCountElement.textContent = (shownCommentsCount + commentsAmount).toString();
-    shownCommentsCount = shownCommentsCount + commentsAmount;
-    hideLoadCommentsBtn();
+  if (commentsSum < BASIC_RENDER_COMMENTS) {
+    addComments(pictureComments.slice(shownCommentsCount, shownCommentsCount + commentsSum));
+    commentsCountElement.textContent = (shownCommentsCount + commentsSum).toString();
+    shownCommentsCount = shownCommentsCount + commentsSum;
+    hideBtnCommentsLoad();
     return;
   }
 
-  addComments(photoComments.slice(shownCommentsCount, shownCommentsCount + SHOW_COMMENTS_STEP));
-  commentsCountElement.textContent = (shownCommentsCount + SHOW_COMMENTS_STEP).toString();
-  shownCommentsCount = shownCommentsCount + SHOW_COMMENTS_STEP;
+  addComments(pictureComments.slice(shownCommentsCount, shownCommentsCount + BASIC_RENDER_COMMENTS));
+  commentsCountElement.textContent = (shownCommentsCount + BASIC_RENDER_COMMENTS).toString();
+  shownCommentsCount = shownCommentsCount + BASIC_RENDER_COMMENTS;
 };
 
-const clearCommentList = () => {
-  commentList.innerHTML = '';
+const clearAllComments = () => {
+  allComments.innerHTML = '';
   shownCommentsCount = 0;
-  photoComments = [];
-  loadCommentsBtn.classList.remove('visually-hidden');
+  pictureComments = [];
+  btnCommentsLoad.classList.remove('visually-hidden');
 };
 
 const onLoadCommentsClick = (evt) => {
   evt.preventDefault();
 
-  if (shownCommentsCount +  SHOW_COMMENTS_STEP >= photoComments.length) {
-    addComments(photoComments.slice(shownCommentsCount));
-    commentsCountElement.textContent = (photoComments.length).toString();
-    shownCommentsCount = photoComments.length;
-    hideLoadCommentsBtn();
+  if (shownCommentsCount +  BASIC_RENDER_COMMENTS >= pictureComments.length) {
+    addComments(pictureComments.slice(shownCommentsCount));
+    commentsCountElement.textContent = (pictureComments.length).toString();
+    shownCommentsCount = pictureComments.length;
+    hideBtnCommentsLoad();
     return;
   }
 
-  addComments(photoComments.slice(shownCommentsCount, shownCommentsCount + SHOW_COMMENTS_STEP));
-  commentsCountElement.textContent = (shownCommentsCount + SHOW_COMMENTS_STEP).toString();
-  shownCommentsCount = shownCommentsCount + SHOW_COMMENTS_STEP;
+  addComments(pictureComments.slice(shownCommentsCount, shownCommentsCount + BASIC_RENDER_COMMENTS));
+  commentsCountElement.textContent = (shownCommentsCount + BASIC_RENDER_COMMENTS).toString();
+  shownCommentsCount = shownCommentsCount + BASIC_RENDER_COMMENTS;
 };
 
-loadCommentsBtn.addEventListener('click', onLoadCommentsClick);
+btnCommentsLoad.addEventListener('click', onLoadCommentsClick);
 
-export {showCommentList, clearCommentList};
+export {showAllComments, clearAllComments};

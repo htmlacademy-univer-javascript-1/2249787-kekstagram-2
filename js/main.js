@@ -1,9 +1,11 @@
 import {showPhoto} from './photoMiniatures.js';
-import './new photo.js';
-import './validation-form.js';
-import {getData} from './api.js';
-import {showError} from './error.js';
+import './NewPicture.js';
+import  './picture-form.js';
+import {inputData} from './api.js';
+import {indicateError} from './error.js';
+import {showFilters} from './filter.js';
 
-getData((pictures) => {
+inputData((pictures) => {
   showPhoto(pictures);
-}, showError);
+  showFilters(pictures);
+}, indicateError);
