@@ -1,8 +1,10 @@
 import {openPhotoFull} from './photoFull.js';
 
-const photoTemplate = document.querySelector('#picture').content.querySelector('.picture');
-const photoConteiner = document.querySelector('.pictures');
+const photoContainer = document.querySelector('.pictures');
 const photoListFragment = document.createDocumentFragment();
+const photoTemplate = document.querySelector('#picture')
+  .content
+  .querySelector('.picture');
 
 let pictures = [];
 
@@ -17,11 +19,11 @@ const showPhoto = (photos) => {
     photoListFragment.appendChild(photoElement);
   });
 
-  photoConteiner.appendChild(photoListFragment);
+  photoContainer.appendChild(photoListFragment);
 };
 
 const hidePictures = () => {
-  photoConteiner.querySelectorAll('.picture').forEach((photoElement) => {
+  photoContainer.querySelectorAll('.picture').forEach((photoElement) => {
     photoElement.remove();
   });
 };
@@ -33,6 +35,6 @@ const onPhotoListClick = function (evt) {
   }
 };
 
-photoConteiner.addEventListener('click', onPhotoListClick);
+photoContainer.addEventListener('click', onPhotoListClick);
 
 export {showPhoto, hidePictures};

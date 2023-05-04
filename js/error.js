@@ -1,12 +1,14 @@
 import {isEscapeKey} from './util.js';
 
-const errorTemplate = document.querySelector('#error').content.querySelector('.error');
+const errorTemplate = document.querySelector('#error')
+  .content
+  .querySelector('.error');
 
 const closeError = () => {
   document.querySelector('.error').remove();
 };
 
-const showError = (errorText) => {
+const indicateError = (errorText) => {
   const errorFragment = document.createDocumentFragment();
   const errorElement = errorTemplate.cloneNode(true);
   errorElement.querySelector('.error__title').textContent = errorText;
@@ -27,4 +29,4 @@ const showError = (errorText) => {
   document.body.appendChild(errorFragment);
 };
 
-export {showError, closeError};
+export {indicateError, closeError};
