@@ -1,6 +1,6 @@
 import {isEscapeKey} from './util.js';
-import {reloadPhotoScale} from './picture-scale.js';
-import {reloadFilters} from './picture-filters.js';
+import {reloadPhotoScale} from './pictureScale.js';
+import {reloadFilters} from './pictureFilters.js';
 
 const uploadPhoto = document.querySelector('#upload-file');
 const uploadPhotoOverlay = document.querySelector('.img-upload__overlay');
