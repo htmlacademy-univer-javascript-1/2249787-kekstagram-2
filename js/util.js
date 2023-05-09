@@ -20,7 +20,7 @@ const mixArray = (array) => (array.sort(() => Math.random() - 0.5));
 
 const isEscapeKey = (evt) => (evt.key === 'Escape');
 
-function refute (callback, timeoutDelay = 500) {
+function debounce (callback, timeoutDelay = 500) {
   let timeoutId;
 
   return (...rest) => {
@@ -35,6 +35,18 @@ function getId () {
   return function () {
     lastGetId += 1;
     return lastGetId;
+  };
+}
+
+function throttle (callback, delayBetweenFrames = 500) {
+  let lastTime = 0;
+
+  return (...rest) => {
+    const now = new Date();
+    if (now - lastTime >= delayBetweenFrames) {
+      callback.apply(this, rest);
+      lastTime = now;
+    }
   };
 }
 
@@ -54,4 +66,4 @@ function getRandomId (min, max) {
   };
 }
 
-export {getRandomNumber, checkMaxSymbol, mixArray, isEscapeKey, refute, getId, getRandomId};
+export {getRandomNumber, checkMaxSymbol, mixArray, isEscapeKey, debounce, getId, getRandomId, throttle};
