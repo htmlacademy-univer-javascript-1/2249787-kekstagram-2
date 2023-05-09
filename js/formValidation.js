@@ -1,14 +1,11 @@
 import {checkStringLength} from './util.js';
-import {sendData} from './api.js';
-import {showError} from './error.js';
+import {outputData} from './api.js';
+import {indicateError} from './error.js';
 import {showSuccess} from './success.js';
 import {closeUploadOverlay} from './new photo.js';
+import {MAX_HASH_TAGS_VALUE, MAX_HASH_TAG_LENGTH, MAX_COMMENT_LENGTH} from './constants.js';
 
 const pictureForm = document.querySelector('#upload-select-image');
-
-const MAX_HASH_TAGS_VALUE = 5;
-const MAX_HASH_TAGS_LENGTH = 20;
-const MAX_COMMENT_LENGTH = 140;
 
 const submitButton = document.querySelector('#upload-submit');
 
@@ -24,7 +21,7 @@ const validateHashTags = (hashTagsString) => {
   }
 
   return hashTags.every((hashTag) => /(^|\B)#(?![0-9]+\b)([a-zA-Z0-9]{1,19})(\b|\r)/g.test(hashTag)
-    && checkStringLength(hashTag, MAX_HASH_TAGS_LENGTH));
+    && checkStringLength(hashTag, MAX_HASH_TAG_LENGTH));
 };
 
 const validateComment = (comment) => (checkStringLength(comment, MAX_COMMENT_LENGTH));
@@ -59,7 +56,7 @@ pictureForm.addEventListener('submit', (evt) => {
   const isValid = pristine.validate();
   if (isValid) {
     blockSubmitButton('Сохраняю...');
-    sendData(
+    outputData(
       () => {
         closeUploadOverlay();
         showSuccess('Публикация отправлена');
@@ -67,7 +64,7 @@ pictureForm.addEventListener('submit', (evt) => {
       },
       () => {
         closeUploadOverlay();
-        showError('Ошибка отправки. Попробуйте позже');
+        indicateError('Ошибка отправки. Попробуйте позже');
         unblockSubmitButton();
       },
       new FormData(evt.target)
